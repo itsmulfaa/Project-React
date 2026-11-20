@@ -5,7 +5,7 @@ export function validasiMk({ nama, sks, nilai }, namaLain, daftar) {
   const n = String(nama).trim();
   if (!n) e.nama = "Nama mata kuliah wajib diisi.";
   else if (n.length < 3) e.nama = "Nama minimal 3 karakter.";
-  else if (n.length > 60) e.nama = "Nama maksimal 60 karakter.";
+  else if (n.length > 80) e.nama = "Nama maksimal 80 karakter.";
   else if (namaLain.some((x) => x.toLowerCase() === n.toLowerCase())) e.nama = "Mata kuliah ini sudah ada di semester ini.";
   const s = Number(sks);
   if (!Number.isInteger(s) || s < 1 || s > 3) e.sks = "SKS harus 1 sampai 3.";
@@ -50,5 +50,14 @@ export function validasiPengaturan(d) {
     else batas = m;
   });
   if (!d.predikatBawah.trim()) e.predikatBawah = "Nama predikat wajib diisi.";
+    const totalSks = parseAngka(d.totalSksLulus);
+  if (
+    !Number.isInteger(totalSks) ||
+    totalSks < 1 ||
+    totalSks > 300
+  ) {
+    e.totalSksLulus =
+      "Total SKS kelulusan harus bilangan bulat antara 1 sampai 300.";
+  }
   return e;
 }

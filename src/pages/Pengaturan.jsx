@@ -9,8 +9,14 @@ import { pengaturanType } from "./propTypesUmum";
 
 const keDraft = (p) => ({
   targetIpk: String(p.targetIpk),
-  bobot: Object.fromEntries(Object.entries(p.bobot).map(([k, v]) => [k, String(v)])),
-  predikat: p.predikat.map((x) => ({ min: String(x.min), label: x.label })),
+  totalSksLulus: String(p.totalSksLulus ?? 144),
+  bobot: Object.fromEntries(
+    Object.entries(p.bobot).map(([k, v]) => [k, String(v)])
+  ),
+  predikat: p.predikat.map((x) => ({
+    min: String(x.min),
+    label: x.label,
+  })),
   predikatBawah: p.predikatBawah,
 });
 
@@ -31,18 +37,31 @@ export default function Pengaturan({ pengaturan, onSave, onResetPengaturan, onRe
   }, [tersimpan]);
 
   const simpan = (e) => {
-    e.preventDefault();
-    const err = validasiPengaturan(draft);
-    setError(err);
-    if (Object.keys(err).length) return;
-    onSave({
-      targetIpk: parseAngka(draft.targetIpk),
-      bobot: Object.fromEntries(Object.entries(draft.bobot).map(([k, v]) => [k, parseAngka(v)])),
-      predikat: draft.predikat.map((x) => ({ min: parseAngka(x.min), label: x.label.trim() })),
-      predikatBawah: draft.predikatBawah.trim(),
-    });
-    setTersimpan(true);
-  };
+  e.preventDefault();
+
+  const err = validasiPengaturan(draft);
+  setError(err);
+
+  if (Object.keys(err).length) return;
+
+  onSave({
+    targetIpk: parseAngka(draft.targetIpk),
+    totalSksLulus: parseAngka(draft.totalSksLulus),
+    bobot: Object.fromEntries(
+      Object.entries(draft.bobot).map(([k, v]) => [
+        k,
+        parseAngka(v),
+      ])
+    ),
+    predikat: draft.predikat.map((x) => ({
+      min: parseAngka(x.min),
+      label: x.label.trim(),
+    })),
+    predikatBawah: draft.predikatBawah.trim(),
+  });
+
+  setTersimpan(true);
+};
 
   const ubahPred = (i, k) => (e) =>
     setDraft({ ...draft, predikat: draft.predikat.map((x, j) => (j === i ? { ...x, [k]: e.target.value } : x)) });
@@ -71,6 +90,35 @@ export default function Pengaturan({ pengaturan, onSave, onResetPengaturan, onRe
           <div className="form">
             <Field label="Target yang ingin dicapai" error={error.targetIpk}>
               <input inputMode="decimal" value={draft.targetIpk} onChange={(e) => setDraft({ ...draft, targetIpk: e.target.value })} />
+            </Field>
+          </div>
+        </section>
+
+        <section className="panel">
+          <h2>Target SKS Kelulusan</h2>
+          <p className="muted small">
+            Atur total SKS yang harus ditempuh untuk menyelesaikan studi.
+          </p>
+
+          <div className="form">
+            <Field
+              label="Total SKS untuk lulus"
+              error={error.totalSksLulus}
+            >
+              <input
+                type="number"
+                min="1"
+                max="300"
+                step="1"
+                inputMode="numeric"
+                value={draft.totalSksLulus}
+                onChange={(e) =>
+                  setDraft({
+                    ...draft,
+                    totalSksLulus: e.target.value,
+                  })
+                }
+              />
             </Field>
           </div>
         </section>

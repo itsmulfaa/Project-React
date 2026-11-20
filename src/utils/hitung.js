@@ -56,3 +56,73 @@ export function hitungTarget({ ipkLama, sksLama, target, sksBaru, skala }) {
   }
   return { dibutuhkan, ipkMaks, status, semesterMinimal };
 }
+
+/**
+ * Menghitung progres SKS menuju kelulusan.
+ */
+export function hitungProgresSks(sksSelesai, totalSksLulus) {
+  const total = Math.max(0, Number(totalSksLulus) || 0);
+  const selesai = Math.max(0, Number(sksSelesai) || 0);
+
+  if (total === 0) {
+    return {
+      selesai,
+      total,
+      sisa: 0,
+      persen: 0,
+    };
+  }
+
+  return {
+    selesai,
+    total,
+    sisa: Math.max(total - selesai, 0),
+    persen: Math.min((selesai / total) * 100, 100),
+  };
+}
+
+export function hitungTargetLulus({
+  ipkLama,
+  sksLama,
+  target,
+  totalSksLulus,
+  skala,
+}) {
+  const sisa = totalSksLulus - sksLama;
+
+  if (sisa <= 0) {
+    return {
+      sisa: 0,
+      dibutuhkan: null,
+      ipkMaks: ipkLama,
+      status: "selesai",
+    };
+  }
+
+  const dibutuhkan =
+    (target * totalSksLulus - ipkLama * sksLama) / sisa;
+
+  const dibutuhkanBulat =
+    Math.round(dibutuhkan * 10000) / 10000;
+
+  const ipkMaks =
+    (ipkLama * sksLama + skala * sisa) /
+    totalSksLulus;
+
+  let status = "mungkin";
+
+  if (dibutuhkanBulat <= 0) {
+    status = "aman";
+  } else if (dibutuhkanBulat > skala) {
+    status = "tidak-realistis";
+  } else if (dibutuhkanBulat >= skala - 0.3) {
+    status = "berat";
+  }
+
+  return {
+    sisa,
+    dibutuhkan: dibutuhkanBulat,
+    ipkMaks,
+    status,
+  };
+}

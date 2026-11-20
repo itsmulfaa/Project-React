@@ -5,7 +5,7 @@ import TrendBars from "../components/TrendBars";
 import ProgressBar from "../components/ProgressBar";
 import Button from "../components/Button";
 import { Bunga, Bintang } from "../components/Ornament";
-import { hitungIpk, hitungIps, totalSks, predikat, statusProgres, skalaMaks } from "../utils/hitung";
+import {hitungIpk, hitungIps, totalSks, predikat, statusProgres, skalaMaks, hitungProgresSks, } from "../utils/hitung";
 import { semestersType, pengaturanType } from "./propTypesUmum";
 
 export default function Home({ semesters, pengaturan }) {
@@ -19,6 +19,11 @@ export default function Home({ semesters, pengaturan }) {
   const tren = semesters.map((s) => ({ id: s.id, nama: s.nama, ips: hitungIps(s.courses, bobot) }));
   const persenTarget = (ipk / targetIpk) * 100;
   const sisa = Math.max(targetIpk - ipk, 0);
+  const totalSksLulus = pengaturan.totalSksLulus ?? 144;
+  const progresSks = hitungProgresSks(
+    totalSks(semuaMk),
+    totalSksLulus
+  );
 
   return (
     <>
@@ -68,6 +73,43 @@ export default function Home({ semesters, pengaturan }) {
           nilaiLabel={`${Math.min(Math.round(persenTarget), 100)}%`}
           hint={!adaData ? "Isi nilai pertamamu untuk mulai melacak target." : sisa === 0 ? "Target tercapai. Pertahankan ya!" : `Tinggal ${sisa.toFixed(2)} poin lagi. Kamu bisa!`}
         />
+      </section>
+
+      <section className="panel lift">
+        <div className="panel__head">
+          <h2>Progres Kelulusan</h2>
+          <BookOpen size={20} className="muted" />
+        </div>
+
+        <ProgressBar
+          judul="Penyelesaian SKS"
+          persen={progresSks.persen}
+          nilaiLabel={`${progresSks.persen.toFixed(1)}%`}
+          hint={`${progresSks.selesai} dari ${progresSks.total} SKS telah dicatat.`}
+        />
+
+        <div className="panel__gap" />
+
+        <div className="grid-3">
+          <StatCard
+            label="SKS ditempuh"
+            value={progresSks.selesai}
+            icon={BookOpen}
+            warna="anggur"
+          />
+          <StatCard
+            label="Sisa SKS"
+            value={progresSks.sisa}
+            icon={Layers}
+            warna="rose"
+          />
+          <StatCard
+            label="Target kelulusan"
+            value={progresSks.total}
+            icon={Award}
+            warna="emas"
+          />
+        </div>
       </section>
 
       <section className="panel lift">

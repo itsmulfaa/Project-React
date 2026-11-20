@@ -1,6 +1,8 @@
 // Pengaturan awal. Semua nilai ini bisa diubah dari halaman Pengaturan.
 export const DEFAULT_PENGATURAN = {
   targetIpk: 3.5,
+  totalSksLulus: 144,
+  
   bobot: {
     A: 4.00,
     "A-": 3.75,

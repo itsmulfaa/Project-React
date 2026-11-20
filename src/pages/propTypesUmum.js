@@ -6,7 +6,13 @@ export const semestersType = PropTypes.arrayOf(
 
 export const pengaturanType = PropTypes.shape({
   targetIpk: PropTypes.number,
+  totalSksLulus: PropTypes.number,
   bobot: PropTypes.objectOf(PropTypes.number),
-  predikat: PropTypes.arrayOf(PropTypes.shape({ min: PropTypes.number, label: PropTypes.string })),
+  predikat: PropTypes.arrayOf(
+    PropTypes.shape({
+      min: PropTypes.number,
+      label: PropTypes.string,
+    })
+  ),
   predikatBawah: PropTypes.string,
 }).isRequired;
