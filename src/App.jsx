@@ -14,8 +14,22 @@ export default function App() {
   const [semesters, setSemesters] = useLocalStorage("gradie-semesters", DATA_AWAL);
   const [pengaturan, setPengaturan] = useLocalStorage("gradie-pengaturan", DEFAULT_PENGATURAN);
 
-  const tambahSemester = () =>
-    setSemesters([...semesters, { id: Date.now(), nama: `Semester ${semesters.length + 1}`, courses: [] }]);
+  const tambahSemester = () => {
+  const nomorTerbesar = semesters.reduce((maks, semester) => {
+    const nomor = Number(semester.nama.match(/\d+/)?.[0] || 0);
+    return Math.max(maks, nomor);
+  }, 0);
+
+  setSemesters([
+    ...semesters,
+    {
+      id: Date.now(),
+      nama: `Semester ${nomorTerbesar + 1}`,
+      courses: [],
+    },
+  ]);
+};
+
   const hapusSemester = (id) => setSemesters(semesters.filter((s) => s.id !== id));
 
   const ubahCourses = (semId, fn) =>

@@ -1,7 +1,18 @@
 // Pengaturan awal. Semua nilai ini bisa diubah dari halaman Pengaturan.
 export const DEFAULT_PENGATURAN = {
   targetIpk: 3.5,
-  bobot: { A: 4, "B+": 3.5, B: 3, "C+": 2.5, C: 2, D: 1, E: 0 },
+  bobot: {
+    A: 4.00,
+    "A-": 3.75,
+    "B+": 3.50,
+    B: 3.00,
+    "B-": 2.75,
+    "C+": 2.50,
+    C: 2.00,
+    D: 1.00,
+    E: 0.00,
+    T: 0.00,
+  },
   // Urut dari batas tertinggi. IPK di bawah batas terakhir memakai predikatBawah.
   predikat: [
     { min: 3.5, label: "Dengan Pujian" },

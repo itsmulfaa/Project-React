@@ -8,7 +8,7 @@ export function validasiMk({ nama, sks, nilai }, namaLain, daftar) {
   else if (n.length > 60) e.nama = "Nama maksimal 60 karakter.";
   else if (namaLain.some((x) => x.toLowerCase() === n.toLowerCase())) e.nama = "Mata kuliah ini sudah ada di semester ini.";
   const s = Number(sks);
-  if (!Number.isInteger(s) || s < 1 || s > 6) e.sks = "SKS harus 1 sampai 6.";
+  if (!Number.isInteger(s) || s < 1 || s > 3) e.sks = "SKS harus 1 sampai 3.";
   if (!daftar.includes(nilai)) e.nilai = "Pilih nilai yang tersedia.";
   return e;
 }

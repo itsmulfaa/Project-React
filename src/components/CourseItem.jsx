@@ -36,7 +36,7 @@ export default function CourseItem({ nama, sks, nilai, bobot, namaLain, onSave, 
           </Field>
           <Field label="SKS" error={error.sks}>
             <select value={draft.sks} onChange={ubah("sks")}>
-              {[1, 2, 3, 4, 5, 6].map((n) => <option key={n}>{n}</option>)}
+              {[1, 2, 3].map((n) => <option key={n}>{n}</option>)}
             </select>
           </Field>
           <Field label="Nilai" error={error.nilai}>
