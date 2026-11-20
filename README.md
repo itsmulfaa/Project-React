@@ -67,48 +67,7 @@ Beberapa konsep React dan JavaScript yang diterapkan dalam pengembangan aplikasi
 - **Wildcard Route:** menangani halaman yang tidak ditemukan melalui halaman 404.
 - **Custom Hook:** membuat hook `useLocalStorage` untuk mengelola penyimpanan data.
 - **PropTypes:** memeriksa tipe data props yang diterima komponen.
-
-
-📁 Struktur Folder
-src/
-├── components/
-│   ├── Button.jsx
-│   ├── ConfirmDialog.jsx
-│   ├── CourseForm.jsx
-│   ├── CourseItem.jsx
-│   ├── EmptyState.jsx
-│   ├── Field.jsx
-│   ├── Navbar.jsx
-│   ├── Ornament.jsx
-│   ├── ProgressBar.jsx
-│   ├── SemesterCard.jsx
-│   ├── StatCard.jsx
-│   └── TrendBars.jsx
-│
-├── pages/
-│   ├── Home.jsx
-│   ├── Semester.jsx
-│   ├── SemesterDetail.jsx
-│   ├── Simulasi.jsx
-│   ├── Rekap.jsx
-│   ├── Pengaturan.jsx
-│   ├── NotFound.jsx
-│   └── propTypesUmum.js
-│
-├── hooks/
-│   └── useLocalStorage.js
-│
-├── data/
-│   └── default.js
-│
-├── utils/
-│   ├── hitung.js
-│   └── validasi.js
-│
-├── App.jsx
-├── main.jsx
-└── index.css
-
+  
 
 🚀 Cara Menjalankan Proyek
 Pastikan Node.js dan npm sudah terpasang pada komputer.
